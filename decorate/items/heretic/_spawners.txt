@@ -1,0 +1,57 @@
+actor GunAmmoSpawnerH1 : GunAmmoSpawner replaces GoldWandAmmo {}
+actor GunAmmoSpawnerH2 : GunAmmoSpawner replaces GoldWandHefty {}
+actor GunAmmoSpawnerH3 : GunAmmoSpawner replaces CrossbowAmmo {}
+actor GunAmmoSpawnerH4 : GunAmmoSpawner replaces CrossbowHefty {}
+actor GunAmmoSpawnerH5 : GunAmmoSpawner replaces BlasterAmmo {}
+actor GunAmmoSpawnerH6 : GunAmmoSpawner replaces BlasterHefty {}
+actor GunAmmoSpawnerH7 : GunAmmoSpawner replaces SkullRodAmmo {}
+actor GunAmmoSpawnerH8 : GunAmmoSpawner replaces SkullRodHefty {}
+actor GunAmmoSpawnerH9 : GunAmmoSpawner replaces MaceAmmo {}
+actor GunAmmoSpawnerH10 : GunAmmoSpawner replaces MaceHefty {}
+actor GunAmmoSpawnerH11 : GunAmmoSpawner replaces PhoenixRodAmmo {}
+actor GunAmmoSpawnerH12 : GunAmmoSpawner replaces PhoenixRodHefty {}
+actor GunAmmoSpawnerH13 : GunAmmoSpawner replaces CrystalVial {}
+
+actor GunSpawnerH1 : UncommonGunSpawner replaces Gauntlets {}
+actor GunSpawnerH2 : CommonGunSpawner replaces GoldWand{}
+actor GunSpawnerH3 : RandomSpawner replaces Crossbow{	
+	DropItem CommonGunSpawner
+	DropItem CommonGunSpawner
+	DropItem CommonGunSpawner
+	DropItem CommonGunSpawner
+	DropItem UncommonGunSpawner
+	DropItem UncommonGunSpawner
+	DropItem RareGunSpawner
+}
+actor GunSpawnerH4 : RandomSpawner replaces Blaster{	
+	DropItem CommonGunSpawner
+	DropItem CommonGunSpawner
+	DropItem CommonGunSpawner
+	DropItem UncommonGunSpawner
+	DropItem UncommonGunSpawner
+	DropItem UncommonGunSpawner
+	DropItem RareGunSpawner
+}
+actor GunSpawnerH5 : RandomSpawner replaces Mace{	
+	DropItem UncommonGunSpawner
+	DropItem RareGunSpawner
+}
+actor GunSpawnerH6 : RandomSpawner replaces SkullRod{	
+	DropItem UncommonGunSpawner
+	DropItem RareGunSpawner
+}
+actor GunSpawnerH7 : CommonGunSpawner replaces Staff{}
+actor GunSpawnerH8 : RareGunSpawner replaces PhoenixRod{}
+
+actor HereticArtifactSpawner : RandomSpawner {
+	DropItem "ArtiEgg"
+	DropItem "ArtiInvisibility"
+	DropItem "ArtiInvulnerability"
+	DropItem "ArtiSuperHealth"
+	DropItem "ArtiTeleport"
+	DropItem "ArtiFly"
+	DropItem "ArtiTorch"
+  DropItem "FlameblastOrb"
+}
+
+actor ArtiTomeOfPower2 : HereticArtifactSpawner replaces ArtiTomeOfPower {}

@@ -1,0 +1,721 @@
+ACTOR RGUPlayer : DoomPlayer
+{
++QUICKTORETALIATE
+  +SHOOTABLE
+  +SOLID
+  -INVISIBLE  
+  -INVULNERABLE
+  +ISMONSTER
+  
+  Speed 1
+  Health 100
+  Radius 16
+  Height 56
+  Mass 500
+  PainChance 255
+  CameraHeight 48
+
+  //Player.StartItem "Usp .45"
+  //Player.WeaponSlot 1, "Usp .45"
+
+  Player.ColorRange 112, 127
+  Player.DisplayName "RGH Player"
+  Player.CrouchSprite "PLYC"
+
+  Player.StartItem "FragGrenadeAmmo", 2
+  Player.StartItem "USP45Clip", 12
+  Player.StartItem "USP45Clip2", 18
+  Player.StartItem "USP45Clip3", 24
+  Player.StartItem "44MagnumClip", 6
+  Player.StartItem "44MagnumClip2", 12
+  Player.StartItem "FAMASClip", 30
+  Player.StartItem "FAMASClip2", 45
+  Player.StartItem "M203Clip", 1
+  Player.StartItem "FALClip", 30
+  Player.StartItem "FALClip2", 45
+  Player.StartItem "SPASClip", 8
+  Player.StartItem "SPASClip2", 16
+  Player.StartItem "AA12Clip", 8
+  Player.StartItem "AA12Clip2", 16
+  Player.StartItem "UMP45Clip", 32
+  Player.StartItem "UMP45Clip2", 48
+  Player.StartItem "VectorClip", 30
+  Player.StartItem "VectorClip2", 45
+  Player.StartItem "MiniUziClip", 32
+  Player.StartItem "MiniUziClip2", 48
+  Player.StartItem "MiniUziClip3", 64
+  Player.StartItem "P90Clip", 50
+  Player.StartItem "P90Clip2", 75
+  Player.StartItem "ThumperClip", 1
+  Player.StartItem "ACRClip", 30
+  Player.StartItem "ACRClip2", 45
+  Player.StartItem "AT4Clip", 1
+  Player.StartItem "InterventionClip", 5
+  Player.StartItem "InterventionClip2", 10
+  Player.StartItem "BarrettClip", 10
+  Player.StartItem "BarrettClip2", 15
+  Player.StartItem "G18Clip", 33
+  Player.StartItem "G18Clip2", 50
+  Player.StartItem "G18Clip3", 66
+  Player.StartItem "MG4Clip", 100
+  Player.StartItem "MG4Clip2", 200
+  Player.StartItem "PP2000Clip", 20
+  Player.StartItem "PP2000Clip2", 30
+  Player.StartItem "PP2200Clip", 40
+  Player.StartItem "SCARHClip", 20
+  Player.StartItem "SCARHClip2", 30
+  Player.StartItem "M4A1Clip", 30
+  Player.StartItem "M4A1Clip2", 45
+  Player.StartItem "RangerClip", 2
+  Player.StartItem "F2000Clip", 30
+  Player.StartItem "F2000Clip2", 45
+  Player.StartItem "MP5Clip", 30
+  Player.StartItem "MP5Clip2", 45
+  Player.StartItem "M93RClip", 20
+  Player.StartItem "M93RClip2", 30
+  Player.StartItem "M16Clip", 30
+  Player.StartItem "M16Clip2", 45
+  Player.StartItem "AK47Clip", 30
+  Player.StartItem "AK47Clip2", 45
+  Player.StartItem "StrikerClip", 12
+  Player.StartItem "StrikerClip2", 18
+  Player.StartItem "AUGHBARClip", 42
+  Player.StartItem "AUGHBARClip2", 63
+  Player.StartItem "WA2000Clip", 6
+  Player.StartItem "WA2000Clip2", 12
+  Player.StartItem "DeagleClip", 7
+  Player.StartItem "DeagleClip2", 14
+  Player.StartItem "M9Clip", 15
+  Player.StartItem "M9Clip2", 25
+  Player.StartItem "M9Clip3", 30
+  Player.StartItem "M1014Clip", 4
+  Player.StartItem "M1014Clip2", 6
+  Player.StartItem "M240Clip", 100
+  Player.StartItem "M240Clip2", 200
+  Player.StartItem "L86Clip", 100
+  Player.StartItem "L86Clip2", 200
+  Player.StartItem "RPGClip", 1
+  Player.StartItem "M1887Clip", 7
+  Player.StartItem "M14Clip", 20
+  Player.StartItem "M14Clip2", 30
+  
+  Player.SideMove 0.65
+  Player.ForwardMove 0.65
+  
+  DamageFactor "flameblast", 0.002
+  DamageFactor "Normal", 1.75
+  DamageFactor "Fire", 1.0
+  DamageFactor "Slime", 1.0
+  DamageFactor "Falling", 1.0
+  DamageFactor "Bullet", 1.0
+  DamageFactor "Shotgun", 1.0
+  DamageFactor "Rifle", 1.0
+  DamageFactor "Sniper", 1.0
+  DamageFactor "Knife", 1.0
+  DamageFactor "LMG", 1.0
+  DamageFactor "Telebomb", 0.0
+  DamageFactor "Step", 0.2
+  DamageFactor "Revive", 0.0
+  DamageFactor curse, 0.2
+  States
+  {
+  Spawn:  	
+  	PLAY A 5 A_TakeInventory("Moving",1)
+  	PLAY A 0 A_JumpIfInventory("Perk2_ColdBlooded", 1, "ColdBlooded")
+	PLAY A 0 A_JumpIfInventory("Perk2_ColdBlooded_DM", 1, "ColdBlooded_DM")	
+    Loop
+  ColdBlooded:	
+	PLAY A 0 A_ChangeFlag("CANTSEEK", 1)
+	goto Spawn
+  ColdBlooded_DM:
+  	PLAY A 0 A_SetTranslucent(0.45, 0)  	
+  	//PLAY A 0 ACS_ExecuteAlways(645,0,0,0,0) // C
+  	goto Spawn
+  See:
+	PLAY A 0 ACS_ExecuteAlways(641,0,0,0,0) // Infinite ammo for bots	
+	PLAY A 0 A_JumpIfInventory("Aiming",1,"SeeAim")
+    PLAY A 7 A_GiveInventory("Moving",1)
+    PLAY B 7 A_GiveInventory("Moving",1)
+    TNT1 A 0 A_JumpIf(ACS_ExecuteWithResult(665,0,0,0) == 1, 2) // No stepping sound mid-air
+    PLAY C 0 A_SpawnItemEx("PlayerStepSmokePuff", 0, -4, 0, 0, 0, 0, 0, 128, 0)
+    PLAY C 7 A_GiveInventory("Moving",1)
+    PLAY D 7 A_GiveInventory("Moving",1)
+    TNT1 A 0 A_JumpIf(ACS_ExecuteWithResult(665,0,0,0) == 1, 2)
+    PLAY A 0 A_SpawnItemEx("PlayerStepSmokePuff", 0, 4, 0, 0, 0, 0, 0, 128, 0)
+	PLAY A 0 A_JumpIfInventory("Perk2_ColdBlooded", 1, "ColdBlooded")
+	PLAY A 0 A_JumpIfInventory("Perk2_ColdBlooded_DM", 1, "ColdBlooded_DM")
+    goto Spawn
+  SeeAim:
+    PLAY A 11 A_GiveInventory("Moving",1)
+    PLAY B 11 A_GiveInventory("Moving",1)
+    TNT1 A 0 A_JumpIf(ACS_ExecuteWithResult(665,0,0,0) == 1, 2) 
+    PLAY C 0 A_SpawnItemEx("PlayerStepSmokePuff2", 0, -4, 0, 0, 0, 0, 0, 128, 0)
+    PLAY C 11 A_GiveInventory("Moving",1)
+    PLAY D 11 A_GiveInventory("Moving",1)
+    TNT1 A 0 A_JumpIf(ACS_ExecuteWithResult(665,0,0,0) == 1, 2)
+    PLAY A 0 A_SpawnItemEx("PlayerStepSmokePuff2", 0, 4, 0, 0, 0, 0, 0, 128, 0)
+    goto Spawn
+  Missile:
+    PLAY E 6 BRIGHT	
+	//PLAY E 0 A_GiveInventory("InCombat",5)
+	//PLAY E 0 ACS_ExecuteAlways(640,0,0,0,0) // cold blooded invis
+	//PLAY E 0 A_JumpIfInventory("Perk3_Commando_Pro", 1, "Spawn")
+	//PLAY E 0 A_GiveInventory("InCombatRegeneration",5)
+	//PLAY E 0 A_TakeInventory("PowerPerk2_ColdBloodedProEffectPower", 0)
+	//PLAY E 0 A_JumpIfInventory("Aiming", 1, "Spawn")	
+	//PLAY E 0 A_TakeInventory("Perk2_ColdBloodedProEffect", 0)
+    Goto Spawn
+  Melee:
+    PLAY F 3 BRIGHT	
+	//PLAY F 0 A_GiveInventory("InCombat",5)
+	//PLAY F 0 ACS_ExecuteAlways(640,0,0,0,0) // cold blooded invis
+	PLAY F 0 A_JumpIfInventory("Perk3_Commando_Pro", 1, "Spawn")
+	PLAY F 0 A_GiveInventory("InCombatRegeneration", 5)
+	//PLAY E 0 A_TakeInventory("PowerPerk2_ColdBloodedProEffectPower", 0)
+    Goto Spawn
+  Pain:
+    PLAY G 1 A_GiveInventory("InCombat",5)
+	PLAY G 1 A_GiveInventory("InCombatRegeneration",5)
+	PLAY G 4 A_GiveToTarget("HitIndicator",1)
+	PLAY G 0 A_JumpIfInventory("Perk3_LastStand",1,"PainLastStand")	
+	PLAY G 0 ACS_ExecuteAlways(600,0,0,0,1) // recoil
+    //PLAY G 4 ACS_ExecuteAlways(606,0,0,0,0) // regen
+	//PLAY G 0 ACS_ExecuteAlways(640,0,0,0,0) // cold blooded invis    
+    PLAY G 4 A_Pain
+    Goto Spawn
+  Pain.Ice:
+    PLAY G 0 A_GiveInventory("FrostAttack", 1)
+	goto Pain
+  Pain.curse:
+    PLAY G 4 A_Jump(256,"Cursed2","Cursed3")
+    Goto Spawn
+  Cursed1:
+    PLAY G 0 A_GiveInventory("HieroAmpDMG",1)
+    Goto Pain
+  Cursed2:
+    PLAY G 0 A_GiveInventory("HieroSlow",1)
+    Goto Pain  
+  Cursed3:
+    PLAY G 0 A_GiveInventory("HieroWeaken",1)
+    Goto Pain
+  PainLastStand:
+    PLAY G 0 ACS_ExecuteAlways(643,0,0,0,0) // Perform ASYNCHRONOUS health check (the Urn won't restore HP fast enough for the check to be successful)
+    PLAY G 0 ACS_ExecuteAlways(600,0,0,0,1) // recoil
+    //PLAY G 4 ACS_ExecuteAlways(606,0,0,0,0) // regen
+	//PLAY G 0 ACS_ExecuteAlways(640,0,0,0,0) // cold blooded invis    
+    PLAY G 4 A_Pain
+	goto Spawn
+  Death:
+    PLAY C 0 A_GiveToTarget("KillIndicator",1)
+  	PLAY C 0 A_GiveToTarget("HitIndicator",1)
+	PLAY H 1	
+    PLAY H 0 Thing_ChangeTID(0,9999)
+    PLAY H 0 A_TakeInventory("ThrowingGrenade",1)
+    PLAY H 0 A_TakeInventory("KnifeAttack",1)
+    PLAY H 9 A_TakeInventory("Reloading",1)
+    PLAY I 10 A_PlayerScream
+    PLAY J 10 A_NoBlocking
+    PLAY KLM 10
+    PLAY N -1
+    Stop
+  XDeath:
+    PLAY C 0 A_GiveToTarget("KillIndicator",1)
+  	PLAY C 0 A_GiveToTarget("HitIndicator",1)
+	PLAY O 5
+    PLAY P 5 A_XScream
+    PLAY Q 5 A_NoBlocking
+    PLAY RSTUV 5
+    PLAY W -1    
+  }  
+}
+
+ACTOR MenuPlayer : DoomPlayer
+{
+  -SHOOTABLE
+  -SOLID
+  +INVISIBLE  
+  +INVULNERABLE
+  +NOSKIN
+  -PICKUP
+  
+  RenderStyle Translucent
+  Alpha 0.0
+  
+  
+  Speed 1
+  Health 100
+  Radius 16
+  Height 56
+  Mass 500
+  PainChance 255
+  CameraHeight 48
+
+
+  
+  Player.MorphWeapon "MenuChoice1"
+  Player.MorphWeapon "MenuChoice2"
+  Player.MorphWeapon "MenuChoice3"
+  Player.MorphWeapon "MenuChoice4"
+  Player.MorphWeapon "MenuChoice5"
+  Player.MorphWeapon "MenuChoice6"
+  Player.MorphWeapon "MenuChoice7"
+  Player.MorphWeapon "MenuChoice8"
+  Player.MorphWeapon "MenuChoice9"
+  Player.MorphWeapon "MenuChoice10"
+
+  Player.MorphWeapon "Menu"
+  Player.WeaponSlot 1, "Menu"
+  
+  States
+  {
+  Spawn:  	
+  	PLAY A 5 A_TakeInventory("Moving",1)
+  	PLAY A 0 A_JumpIfInventory("Perk2_ColdBlooded", 1, "ColdBlooded")
+	PLAY A 0 A_JumpIfInventory("Perk2_ColdBlooded_DM", 1, "ColdBlooded_DM")
+    Loop
+  SpawnExplode:
+  	PLAY A 0 A_Explode(9999999,16)
+  	goto Spawn
+  ColdBlooded:	
+	PLAY A 0 A_ChangeFlag("CANTSEEK", 1)
+	goto Spawn
+  ColdBlooded_DM:
+  	PLAY A 0 A_SetTranslucent(0.45, 0)  	
+  	//PLAY A 0 ACS_ExecuteAlways(645,0,0,0,0) // C
+  	goto Spawn
+  See:
+	PLAY A 0 ACS_ExecuteAlways(641,0,0,0,0) // Infinite ammo for bots	
+	PLAY A 0 A_JumpIfInventory("Aiming",1,"SeeAim")
+    PLAY A 7 A_GiveInventory("Moving",1)
+    PLAY B 7 A_GiveInventory("Moving",1)
+    PLAY C 0 A_SpawnItemEx("PlayerStepSmokePuff", 0, -4, 0, 0, 0, 0, 0, 128, 0)
+    PLAY C 7 A_GiveInventory("Moving",1)
+    PLAY D 7 A_GiveInventory("Moving",1)
+    PLAY A 0 A_SpawnItemEx("PlayerStepSmokePuff", 0, 4, 0, 0, 0, 0, 0, 128, 0)
+	PLAY A 0 A_JumpIfInventory("Perk2_ColdBlooded", 1, "ColdBlooded")
+	PLAY A 0 A_JumpIfInventory("Perk2_ColdBlooded_DM", 1, "ColdBlooded_DM")
+    goto Spawn
+  SeeAim:
+    PLAY A 11 A_GiveInventory("Moving",1)
+    PLAY B 11 A_GiveInventory("Moving",1)
+    PLAY C 0 A_SpawnItemEx("PlayerStepSmokePuff2", 0, -4, 0, 0, 0, 0, 0, 128, 0)
+    PLAY C 11 A_GiveInventory("Moving",1)
+    PLAY D 11 A_GiveInventory("Moving",1)
+    PLAY A 0 A_SpawnItemEx("PlayerStepSmokePuff2", 0, 4, 0, 0, 0, 0, 0, 128, 0)
+    goto Spawn
+  Missile:
+    PLAY E 6 BRIGHT	
+	//PLAY E 0 A_GiveInventory("InCombat",5)
+	//PLAY E 0 ACS_ExecuteAlways(640,0,0,0,0) // cold blooded invis
+	//PLAY E 0 A_JumpIfInventory("Perk3_Commando_Pro", 1, "Spawn")
+	//PLAY E 0 A_GiveInventory("InCombatRegeneration",5)
+	//PLAY E 0 A_TakeInventory("PowerPerk2_ColdBloodedProEffectPower", 0)
+	//PLAY E 0 A_JumpIfInventory("Aiming", 1, "Spawn")	
+	//PLAY E 0 A_TakeInventory("Perk2_ColdBloodedProEffect", 0)
+    Goto Spawn
+  Melee:
+    PLAY F 3 BRIGHT	
+	//PLAY F 0 A_GiveInventory("InCombat",5)
+	//PLAY F 0 ACS_ExecuteAlways(640,0,0,0,0) // cold blooded invis
+	PLAY F 0 A_JumpIfInventory("Perk3_Commando_Pro", 1, "Spawn")
+	PLAY F 0 A_GiveInventory("InCombatRegeneration", 5)
+	//PLAY E 0 A_TakeInventory("PowerPerk2_ColdBloodedProEffectPower", 0)
+    Goto Spawn
+  Pain:
+    PLAY G 1 A_GiveInventory("InCombat",5)
+	PLAY G 1 A_GiveInventory("InCombatRegeneration",5)
+	PLAY G 4 A_GiveToTarget("HitIndicator",1)
+	PLAY G 0 A_JumpIfInventory("Perk3_LastStand",1,"PainLastStand")	
+	PLAY G 0 ACS_ExecuteAlways(600,0,0,0,1) // recoil
+    //PLAY G 4 ACS_ExecuteAlways(606,0,0,0,0) // regen
+	//PLAY G 0 ACS_ExecuteAlways(640,0,0,0,0) // cold blooded invis    
+    PLAY G 4 A_Pain
+    Goto Spawn
+  Pain.Ice:
+    PLAY G 0 A_GiveInventory("FrostAttack", 1)
+	goto Pain
+  Pain.curse:
+    PLAY G 4 A_Jump(256,"Cursed2","Cursed3")
+    Goto Spawn
+  Cursed1:
+    PLAY G 0 A_GiveInventory("HieroAmpDMG",1)
+    Goto Pain
+  Cursed2:
+    PLAY G 0 A_GiveInventory("HieroSlow",1)
+    Goto Pain  
+  Cursed3:
+    PLAY G 0 A_GiveInventory("HieroWeaken",1)
+    Goto Pain
+  PainLastStand:
+    PLAY G 0 ACS_ExecuteAlways(643,0,0,0,0) // Perform ASYNCHRONOUS health check (the Urn won't restore HP fast enough for the check to be successful)
+    PLAY G 0 ACS_ExecuteAlways(600,0,0,0,1) // recoil
+    //PLAY G 4 ACS_ExecuteAlways(606,0,0,0,0) // regen
+	//PLAY G 0 ACS_ExecuteAlways(640,0,0,0,0) // cold blooded invis    
+    PLAY G 4 A_Pain
+	goto Spawn
+  Death:
+    PLAY H 1	
+    PLAY H 0 Thing_ChangeTID(0,9999)
+    PLAY H 0 A_TakeInventory("ThrowingGrenade",1)
+    PLAY H 0 A_TakeInventory("KnifeAttack",1)
+    PLAY H 0 A_TakeInventory("Reloading",1)
+    PLAY H 9 A_GiveToTarget("HitIndicator",1)
+    PLAY I 10 A_PlayerScream
+    PLAY J 10 A_NoBlocking
+    PLAY KLM 10
+    PLAY N -1
+    Stop
+  XDeath:
+    PLAY O 5
+    PLAY P 5 A_XScream
+    PLAY Q 5 A_NoBlocking
+    PLAY RSTUV 5
+    PLAY W -1    
+  }  
+}   
+
+ACTOR RGULastStandPlayer : PlayerPawn
+{
+  +QUICKTORETALIATE
+  +NOSKIN
+  +ISMONSTER
+  -PICKUP
+  Speed 1
+  Health 30
+  Radius 16
+  Height 56
+  Mass 1000
+  PainChance 255
+  CameraHeight 9
+  Player.ColorRange 112, 127
+  Player.SideMove 0.025
+  Player.ForwardMove 0.025
+  Player.MorphWeapon "USP .45"
+  Player.WeaponSlot 1, "USP .45"
+  Player.ViewHeight 15
+  Player.JumpZ 0
+  DamageFactor "Normal", 1.75
+  DamageFactor "Fire", 1.0
+  DamageFactor "Slime", 1.0
+  DamageFactor "Falling", 5.0
+  DamageFactor "Bullet", 1.0
+  DamageFactor "Shotgun", 1.0
+  DamageFactor "Rifle", 1.0
+  DamageFactor "Sniper", 1.0
+  DamageFactor "Knife", 1.0
+  DamageFactor "LMG", 1.0
+  DamageFactor "Telebomb", 0.0
+  DamageFactor "Step", 0.2
+  DamageFactor "Revive", 0.0
+  States
+  {
+  Spawn:
+    LAST A 34 A_SpawnItemEx("LastStandUnknown",0,0,0,0,0,1)
+    LAST A 0 A_PlaySound("commando/death")
+    LAST A 0 A_GiveInventory("InCombat",9999)
+	Loop
+  Missile:
+    LAST A 6 
+    Goto Spawn
+  Melee:
+    LAST B 3 BRIGHT
+    Goto Missile
+  Pain:
+    LAST A 0 ACS_ExecuteAlways(600,0,0,0,1)
+    //LAST A 0 ACS_ExecuteAlways(606,0,0,0,0)
+    LAST A 1 A_GiveInventory("InCombat",5)
+    LAST A 4 A_GiveToTarget("HitIndicator",1)
+    LAST A 4 A_Pain
+    Goto Spawn
+  Pain.Revive:
+    LAST A 0
+    LAST A 1 ACS_ExecuteAlways(632,0,0,0,0)
+    LAST A 1 A_GiveInventory("Health",3)
+	LAST A 0 A_TakeInventory("InCombat",9999)
+    Goto Spawn
+  Death:
+  	LAST C 0 A_GiveToTarget("KillIndicator",1)
+  	LAST C 0 A_GiveToTarget("HitIndicator",1)
+    LAST C 1
+	LAST C 0 Thing_ChangeTID(0,9999)
+    LAST C 0 A_TakeInventory("ThrowingGrenade",1)
+    LAST C 0 A_TakeInventory("KnifeAttack",1)
+    LAST C 9 A_TakeInventory("Reloading",1)	        
+    LAST D 10 A_PlayerScream
+    //LAST C 0 A_CustomMissile("FragGrenadeDropped",8,0,0)
+    LAST E 10 A_NoBlocking
+    LAST EEE 10
+    LAST E -1
+    Stop
+  XDeath:
+    PLAY O 0
+    goto Death
+  }
+}
+
+ACTOR RGULastStandPlayer_Unspecified : RGULastStandPlayer
+{
+  Player.MorphWeapon "USP .45 LastStand"
+  Player.WeaponSlot 1, "USP .45 LastStand"
+}
+ACTOR RGULastStandPlayer_USP : RGULastStandPlayer
+{
+  Player.MorphWeapon "USP .45"
+  Player.WeaponSlot 1, "USP .45"
+}
+ACTOR RGULastStandPlayer_USPEx : RGULastStandPlayer
+{
+  Player.MorphWeapon "USP .45 Ex Mags"
+  Player.WeaponSlot 1, "USP .45 Ex Mags"
+}
+ACTOR RGULastStandPlayer_USPAkimbo : RGULastStandPlayer
+{
+  Player.MorphWeapon "USP .45 Akimbo"
+  Player.WeaponSlot 1, "USP .45 Akimbo"
+}
+ACTOR RGULastStandPlayer_USPKnife : RGULastStandPlayer
+{
+  Player.MorphWeapon "USP .45 Tac Knife"
+  Player.WeaponSlot 1, "USP .45 Tac Knife"
+}
+ACTOR RGULastStandPlayer_44Magnum : RGULastStandPlayer
+{
+  Player.MorphWeapon ".44 Magnum"
+  Player.WeaponSlot 1, ".44 Magnum"
+}
+ACTOR RGULastStandPlayer_44MagnumAkimbo : RGULastStandPlayer
+{
+  Player.MorphWeapon ".44 Magnum Akimbo"
+  Player.WeaponSlot 1, ".44 Magnum Akimbo"
+}
+ACTOR RGULastStandPlayer_44MagnumKnife : RGULastStandPlayer
+{
+  Player.MorphWeapon ".44 Magnum Tac Knife"
+  Player.WeaponSlot 1, ".44 Magnum Tac Knife"
+}
+ACTOR RGULastStandPlayer_M9 : RGULastStandPlayer
+{
+  Player.MorphWeapon "M9"
+  Player.WeaponSlot 1, "M9"
+}
+ACTOR RGULastStandPlayer_M9Ex : RGULastStandPlayer
+{
+  Player.MorphWeapon "M9 Ex Mags"
+  Player.WeaponSlot 1, "M9 Ex Mags"
+}
+ACTOR RGULastStandPlayer_M9Akimbo : RGULastStandPlayer
+{
+  Player.MorphWeapon "M9 Akimbo"
+  Player.WeaponSlot 1, "M9 Akimbo"
+}
+ACTOR RGULastStandPlayer_M9Knife : RGULastStandPlayer
+{
+  Player.MorphWeapon "M9 Tac Knife"
+  Player.WeaponSlot 1, "M9 Tac Knife"
+}
+ACTOR RGULastStandPlayer_Deagle : RGULastStandPlayer
+{
+  Player.MorphWeapon "Desert Eagle"
+  Player.WeaponSlot 1, "Desert Eagle"
+}
+ACTOR RGULastStandPlayer_DeagleEx : RGULastStandPlayer
+{
+  Player.MorphWeapon "Deagle Special"
+  Player.WeaponSlot 1, "Deagle Special"
+}
+ACTOR RGULastStandPlayer_DeagleAkimbo : RGULastStandPlayer
+{
+  Player.MorphWeapon "Desert Eagle Akimbo"
+  Player.WeaponSlot 1, "Desert Eagle Akimbo"
+}
+ACTOR RGULastStandPlayer_DeagleKnife : RGULastStandPlayer
+{
+  Player.MorphWeapon "Desert Eagle Tac Knife"
+  Player.WeaponSlot 1, "Desert Eagle Tac Knife"
+}
+ACTOR RGULastStandPlayer_G18 : RGULastStandPlayer
+{
+  Player.MorphWeapon "G18"
+  Player.WeaponSlot 1, "G18"
+}
+ACTOR RGULastStandPlayer_G18Ex : RGULastStandPlayer
+{
+  Player.MorphWeapon "G18 Ex Mags"
+  Player.WeaponSlot 1, "G18 Ex Mags"
+}
+ACTOR RGULastStandPlayer_G18Akimbo : RGULastStandPlayer
+{
+  Player.MorphWeapon "G18 Akimbo"
+  Player.WeaponSlot 1, "G18 Akimbo"
+}
+ACTOR RGULastStandPlayer_PP2000 : RGULastStandPlayer
+{
+  Player.MorphWeapon "PP2000"
+  Player.WeaponSlot 1, "PP2000"
+}
+ACTOR RGULastStandPlayer_PP2000Ex : RGULastStandPlayer
+{
+  Player.MorphWeapon "PP2000 Ex Mags"
+  Player.WeaponSlot 1, "PP2000 Ex Mags"
+}
+ACTOR RGULastStandPlayer_PP2000Ak : RGULastStandPlayer
+{
+  Player.MorphWeapon "PP2000 Akimbo"
+  Player.WeaponSlot 1, "PP2000 Akimbo"
+}
+ACTOR RGULastStandPlayer_M93R : RGULastStandPlayer
+{
+  Player.MorphWeapon "M93 Raffica"
+  Player.WeaponSlot 1, "M93 Raffica"
+}
+ACTOR RGULastStandPlayer_M93REx : RGULastStandPlayer
+{
+  Player.MorphWeapon "M93 Raffica Ex Mags"
+  Player.WeaponSlot 1, "M93 Raffica Ex Mags"
+}
+ACTOR LastStandUnknown
+{
+  Radius 32
+  Height 56
+  +NOGRAVITY
+  +NOBLOCKMAP
+  +DONTSPLASH
+  States
+  {
+  Spawn:
+    UNKN B 35 BRIGHT
+    Stop
+  }
+}
+actor PlayerStepSmokePuff
+{
+  RenderStyle Add
+  alpha 0.95
+  -RANDOMIZE
+  +NOCLIP
+  PROJECTILE
+  Speed 2
+  Damage 0
+  Scale 0.5
+  Translation "112:127=96:111"
+  states
+  {
+  Spawn:
+    TNT1 A 0
+    TNT1 A 0 A_SpawnItemEx("PlayerStepSound", 0, 0, 0, 0, 0, 0, 0, 128, 0)
+    TNT1 A 5
+    stop
+  }
+}
+
+actor PlayerStepSound
+{
+ radius 1
+ height 1
+ +noclip
+ States
+ {
+ Spawn:
+  TNT1 A 0
+  TNT1 A 1 A_PlaySound("misc/footstep")
+  stop
+ }
+}
+
+actor PlayerStepSmokePuff2
+{
+  RenderStyle Add
+  alpha 0.95
+  -RANDOMIZE
+  +NOCLIP
+  PROJECTILE
+  Speed 2
+  Damage 0                     
+  Scale 0.5
+  Translation "112:127=96:111"
+  states
+  {
+  Spawn:
+    TNT1 A 0
+    TNT1 A 0 A_SpawnItemEx("PlayerStepSound2", 0, 0, 0, 0, 0, 0, 0, 128, 0)
+    TNT1 A 5
+    stop
+  }
+}
+
+actor PlayerStepSound2
+{
+ radius 1
+ height 1
+ +noclip
+ States
+ {
+ Spawn:
+  TNT1 A 0
+  TNT1 A 1 A_PlaySound("misc/footstep2")
+  stop
+ }
+}
+
+// Counter for when to start regeneration
+// Given: By InCombat, by getting hurt
+// Affected by: Commando PRO, Extreme Conditioning PRO
+actor InCombatRegeneration : Inventory
+{
+    inventory.amount 0
+    inventory.maxamount 5
+
+}
+
+//Counter for crosshair size
+// Given: When weapon fires, knifing, grenade, reloading and aiming
+// Affected by: Nothing
+actor InCombatCrosshair : Inventory
+{
+    inventory.amount 0
+    inventory.maxamount 35
+}
+
+// Counter for Cold Blooded PRO invisibility
+// Given: When weapon fires, by getting hurt 
+actor InCombat: CustomInventory
+{
+  	+INVENTORY.ALWAYSPICKUP
+    inventory.amount 0
+    inventory.maxamount 5     
+    States{
+		Pickup:
+			TNT1 E 0 A_JumpIfInventory("Perk3_Commando_Pro", 1, 2)
+			TNT1 F 0 A_GiveInventory("InCombatRegeneration")
+			TNT1 A 0 A_TakeInventory("PowerPerk2_ColdBloodedProEffectPower", 0)			
+			stop
+		Use:
+			TNT1 A 0
+			fail	
+	}
+}
+
+actor ReadyRegen : Inventory
+{
+    inventory.amount 0
+    inventory.maxamount 1
+}
+
+actor PowerResetVisibility : PowerInvisibility
+{
+	Powerup.Duration 1
+}
+
+actor ResetVisibility : PowerupGiver
+{
+  inventory.maxamount 0
+  powerup.type "PowerResetVisibility"
+  Powerup.Duration 1
+  +AUTOACTIVATE
+  states
+  {
+  Spawn:
+    TNT1 A -1
+    stop
+  }
+}

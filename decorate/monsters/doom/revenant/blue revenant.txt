@@ -1,0 +1,187 @@
+actor InversionRevenant :FragRevenant
+{
+	Tag "Inversion Revenant"
+	$SitRepSprite "SIT_REV"
+  obituary "%o's brain was swapped out by Inversion Revenant."
+  hitobituary "%o's brain was swapped out by Inversion Revenant."
+  health 500
+  speed 12
+  painchance 70
+  Translation "112:127=[0,0,131]:[0,0,0]"
+  states
+  {
+  Melee:
+    GSKL G 0 A_FaceTarget
+    GSKL G 6 A_SkelWhoosh
+    GSKL H 6 A_FaceTarget
+    GSKL I 6 A_CustomMeleeAttack(25,"skeleton/melee","none")
+    goto See
+  Missile:
+    GSKL J 0 bright A_FaceTarget
+    GSKL J 10 bright A_FaceTarget
+    GSKL K 2 A_CustomMissile("BlueRevenantEightballMissile",56,-10)
+    GSKL K 8 A_CustomMissile("BlueRevenantEightballMissile",56,10)
+    GSKL K 10 A_FaceTarget
+    goto See
+  Death:
+    GSKL LM 7
+    GSKL N 7 A_Scream
+    GSKL O 7 A_NoBlocking
+    GSKL O 0 ACS_ExecuteAlways(648,0,0,0,0)
+    GSKL P 7
+    GSKL QQQQQQQQQQ 2 A_SpawnItemEx("HealthBonus",0,0,0,random(-2,2),random(-2,2),random(1,4),0,0,0)
+    GSKL Q -1
+    stop
+  }
+}
+
+actor BlueRevenantEightballMissile
+{
+  obituary "%o was imploded by a revenant's fireball."
+  radius 8
+  height 8
+  speed 10
+  damage (1)
+  seesound "skeleton/attack"
+  PROJECTILE
+  scale 0.6
+  +SEEKERMISSILE
+  damageType "RevenantBall"
+  decal Scorch
+  states
+  {
+  Spawn:
+    TNT1 A 0
+    TNT1 A 0 A_SpawnItemEx("BlueEightballTrail", -9, 0, 0, 0, 0, 0, 0, 128, 0)
+    TNT1 A 0 A_SpawnItemEx("BlueEightballTrail", -6, 0, 0, 0, 0, 0, 0, 128, 0)
+    TNT1 A 0 A_SpawnItemEx("BlueEightballTrail", -3, 0, 0, 0, 0, 0, 0, 128, 0)
+    TNT1 A 0 A_SpawnItemEx("BlueEightballTrail", -9, 0, 0, 0, 0, 0, 0, 128, 0)
+    TNT1 A 0 A_SpawnItemEx("BlueEightballTrail", -6, 0, 0, 0, 0, 0, 0, 128, 0)
+    TNT1 A 0 A_SpawnItemEx("BlueEightballTrail", -3, 0, 0, 0, 0, 0, 0, 128, 0)
+    8BLX A 1 BRIGHT A_SeekerMissile(10,2)
+    TNT1 A 0 A_SpawnItemEx("BlueEightballTrail", -9, 0, 0, 0, 0, 0, 0, 128, 0)
+    TNT1 A 0 A_SpawnItemEx("BlueEightballTrail", -6, 0, 0, 0, 0, 0, 0, 128, 0)
+    TNT1 A 0 A_SpawnItemEx("BlueEightballTrail", -3, 0, 0, 0, 0, 0, 0, 128, 0)
+    TNT1 A 0 A_SpawnItemEx("BlueEightballTrail", -9, 0, 0, 0, 0, 0, 0, 128, 0)
+    TNT1 A 0 A_SpawnItemEx("BlueEightballTrail", -6, 0, 0, 0, 0, 0, 0, 128, 0)
+    TNT1 A 0 A_SpawnItemEx("BlueEightballTrail", -3, 0, 0, 0, 0, 0, 0, 128, 0)
+    8BLX A 1 BRIGHT A_SeekerMissile(10,2)
+    TNT1 A 0 A_SpawnItemEx("BlueEightballTrail", -9, 0, 0, 0, 0, 0, 0, 128, 0)
+    TNT1 A 0 A_SpawnItemEx("BlueEightballTrail", -6, 0, 0, 0, 0, 0, 0, 128, 0)
+    TNT1 A 0 A_SpawnItemEx("BlueEightballTrail", -3, 0, 0, 0, 0, 0, 0, 128, 0)
+    TNT1 A 0 A_SpawnItemEx("BlueEightballTrail", -9, 0, 0, 0, 0, 0, 0, 128, 0)
+    TNT1 A 0 A_SpawnItemEx("BlueEightballTrail", -6, 0, 0, 0, 0, 0, 0, 128, 0)
+    TNT1 A 0 A_SpawnItemEx("BlueEightballTrail", -3, 0, 0, 0, 0, 0, 0, 128, 0)
+    8BLX A 1 BRIGHT A_SeekerMissile(10,2)
+    TNT1 A 0 A_SpawnItemEx("BlueEightballTrail", -9, 0, 0, 0, 0, 0, 0, 128, 0)
+    TNT1 A 0 A_SpawnItemEx("BlueEightballTrail", -6, 0, 0, 0, 0, 0, 0, 128, 0)
+    TNT1 A 0 A_SpawnItemEx("BlueEightballTrail", -3, 0, 0, 0, 0, 0, 0, 128, 0)
+    TNT1 A 0 A_SpawnItemEx("BlueEightballTrail", -9, 0, 0, 0, 0, 0, 0, 128, 0)
+    TNT1 A 0 A_SpawnItemEx("BlueEightballTrail", -6, 0, 0, 0, 0, 0, 0, 128, 0)
+    TNT1 A 0 A_SpawnItemEx("BlueEightballTrail", -3, 0, 0, 0, 0, 0, 0, 128, 0)
+    8BLX A 1 BRIGHT A_SeekerMissile(20,2)
+    TNT1 A 0 A_SpawnItemEx("BlueEightballTrail", -9, 0, 0, 0, 0, 0, 0, 128, 0)
+    TNT1 A 0 A_SpawnItemEx("BlueEightballTrail", -6, 0, 0, 0, 0, 0, 0, 128, 0)
+    TNT1 A 0 A_SpawnItemEx("BlueEightballTrail", -3, 0, 0, 0, 0, 0, 0, 128, 0)
+    TNT1 A 0 A_SpawnItemEx("BlueEightballTrail", -9, 0, 0, 0, 0, 0, 0, 128, 0)
+    TNT1 A 0 A_SpawnItemEx("BlueEightballTrail", -6, 0, 0, 0, 0, 0, 0, 128, 0)
+    TNT1 A 0 A_SpawnItemEx("BlueEightballTrail", -3, 0, 0, 0, 0, 0, 0, 128, 0)
+    8BLX A 1 BRIGHT A_SeekerMissile(10,2)
+    8BLX A 0 BRIGHT A_CustomMissile("FlightSmokePuff",0,0,180,2,90)
+    goto Spawn
+  Death:  
+    TNT1 A 0 A_Explode(5,128)
+    TNT1 A 0 A_GiveToTarget ("RevenantIndicator") // mark the revenant's TID
+    TNT1 A 0 ACS_ExecuteAlways(663,0,0,0,0) // teleport the victim
+    TNT1 A 5 A_SpawnItemEx("SimpleExplosionMain", 0, 0, 0, 0, 0, 0, 0, 128, 0)
+	  TNT1 G 0 A_AlertMonsters
+    stop
+  }
+}
+
+actor BlueEightballTrail
+{
+  RenderStyle Add
+  alpha 0.7
+  +RANDOMIZE
+  +NOCLIP
+  +NOGRAVITY
+  Scale 0.24
+  states
+  {
+  Spawn:
+    SHK2 A 1
+    SHK2 A 1 A_FadeOut(0.1)
+    goto Spawn+1
+  }
+}
+
+actor RevenantIndicator : CustomInventory
+{
+  +INVENTORY.AUTOACTIVATE
+  +INVENTORY.ALWAYSPICKUP
+  Inventory.Amount 1
+  States{
+  Use:
+    //TNT1 A 0 A_ChangeFlag(SOLID, 0)
+  	TNT1 A 0 ACS_ExecuteAlways(664,0,0,0,0) // mark the revenant's TID
+  	stop
+  }
+}
+
+actor RevenantMakeNonSolid : CustomInventory
+{
+  +INVENTORY.AUTOACTIVATE
+  +INVENTORY.ALWAYSPICKUP
+  Inventory.Amount 1
+  States{
+  Use:
+    TNT1 A 0 A_ChangeFlag(SOLID, 0)
+  	stop
+  }
+}
+
+actor RevenantMakeSolid : CustomInventory
+{
+  +INVENTORY.AUTOACTIVATE
+  +INVENTORY.ALWAYSPICKUP
+  Inventory.Amount 1
+  States{
+  Use:
+    TNT1 A 0 A_ChangeFlag(SOLID, 1)
+  	stop
+  }
+}
+
+actor UninvertibilityGiver : PowerupGiver
+{
+  inventory.maxamount 0
+  powerup.type "UninvertibilityEffect"
+  powerup.duration -1
+  +AUTOACTIVATE
+  states
+  {
+  Spawn:
+    TNT1 A -1
+    stop
+  }
+}
+
+actor PowerUninvertibilityEffect : PowerDamage
+{
+  damagefactor "Explosion", 1.0
+}
+
+actor InversionClearRadius : CustomInventory
+{
+  +INVENTORY.AUTOACTIVATE
+  +INVENTORY.ALWAYSPICKUP
+  Inventory.Amount 1
+  States{
+  Use:
+    TNT1 A 0 A_SetInvulnerable
+    TNT1 A 0 A_Explode(500, 24, false)
+    TNT1 A 0 A_UnSetInvulnerable
+  	stop
+  }
+}

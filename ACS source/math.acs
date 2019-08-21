@@ -1,0 +1,62 @@
+function int tan(int x)
+{
+  return FixedDiv(sin(x), cos(x));
+}
+
+function int sqrt_int(int number)
+{
+	if(number <= 3)
+	{
+		if(number > 0)
+		{
+			return 1;
+		}
+		return 0;
+	}
+
+	int oldAns = number >> 1,                     // initial guess
+	    newAns = (oldAns + number / oldAns) >> 1; // first iteration
+
+	// main iterative method
+	while(newAns < oldAns)
+	{
+		oldAns = newAns;
+		newAns = (oldAns + number / oldAns) >> 1;
+	}
+
+	return oldAns;
+}
+
+function int sqrt(int number) 
+{
+  if (number == 1.0) return 1.0; 
+  if (number <= 0) return 0;
+  int val = 150.0;
+  for (int i=0; i<15; i++) 
+    val = (val + FixedDiv(number, val)) >> 1;
+
+  return val; 
+}
+
+function int distanceFromPoint (int originX, int originY, int originZ, int tid2)
+{
+	int x, y, z, d;
+	x = (originX - GetActorX(tid2)) >> 16; // Convert fixed point to integer
+	y = (originY - GetActorY(tid2)) >> 16;
+	z = (originZ - GetActorZ(tid2)) >> 16;
+	d = sqrt_int( x*x + y*y + z*z );
+	return d;
+}
+
+#define VECTOR_LENGTH(vector) sqrt(FixedMul(vector[0],vector[0]) + FixedMul(vector[1],vector[1]) + FixedMul(vector[2],vector[2]))
+
+int vectorLength;
+#define NORMALIZE_VECTOR(vector) vectorLength = VECTOR_LENGTH(vector);\
+	vector[0] = FixedDiv(vector[0], vectorLength);\
+	vector[1] = FixedDiv(vector[1], vectorLength);\
+	vector[2] = FixedDiv(vector[2], vectorLength);  
+
+#define VECTOR_CROSS_PRODUCT(a, b, c)\
+	c[0] = FixedMul(a[1], b[2]) - FixedMul(a[2], b[1]);\
+	c[1] = FixedMul(a[2], b[0]) - FixedMul(a[0], b[2]);\
+	c[2] = FixedMul(a[0], b[1]) - FixedMul(a[1], b[0]);
